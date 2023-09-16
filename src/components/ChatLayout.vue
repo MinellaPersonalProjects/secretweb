@@ -27,7 +27,7 @@ channel.bind('new-comment', data => {
   console.log(data)
 });
 
-axios.get('/api/comments').then(response => {
+axios.get('https://secretweb-mrgb.onrender.com/comments').then(response => {
   comments = response.data.items ? response.data.items : []
 })
 
@@ -37,7 +37,7 @@ function sendComment() {
     comm: comment.value
   }
 
-  axios.post('/api/comment', commenti).then(response => {
+  axios.post('https://secretweb-mrgb.onrender.com/comment', commenti).then(response => {
     name.value = ''
     comment.value = ''
     console.log(response)
