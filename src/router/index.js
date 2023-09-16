@@ -59,7 +59,10 @@ const routes = [
       }
     ],
   },
-
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/views/404.vue')
+  },
 ]
 
 const router = createRouter({
