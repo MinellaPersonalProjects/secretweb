@@ -2,12 +2,15 @@
 import GetStartedForm from "@/components/GetStartedForm.vue";
 
 import {ref} from "vue";
+import {useAppStore} from "@/store/app";
 
 const dialog = ref(false)
 
 function setDialog(value){
   dialog.value = value
 }
+
+const store = useAppStore()
 
 </script>
 
@@ -19,6 +22,9 @@ function setDialog(value){
       <div class="text-body-2 font-weight-light mb-n1" style="color: white">Welcome to</div>
 
       <h1 class="text-h2 font-weight-bold" style="color: white">Donuts</h1>
+
+      <h1 class="name mr-4 mt-n3" v-show="!store.isUsernameEmpty">
+        {{store.username.toUpperCase()}}</h1>
 
       <div class="py-14" />
 
@@ -61,6 +67,7 @@ function setDialog(value){
               v-model="dialog"
               activator="parent"
               width="40%"
+              class="mt-16"
             >
               <get-started-form @dialog="setDialog"/>
             </v-dialog>
@@ -96,6 +103,16 @@ function setDialog(value){
   background-position: center center; /* Center the image */
   background-repeat: no-repeat; /* Prevent image from repeating */
   background-color: #C7B0B9FF;
+}
+.name{
+  font-style: italic;
+  font-family: "Brush Script MT", cursive;
+  font-stretch: ultra-expanded;
+  font-weight: 600;
+  line-height: 1.25;
+  font-size: 80px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 </style>
 

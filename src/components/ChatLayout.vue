@@ -4,11 +4,14 @@ import {ref} from "vue";
 // import RealTimeChat from "@/components/RealTimeChat.vue";
 import axios from "axios";
 import Pusher from "pusher-js";
+import {useAppStore} from "@/store/app";
 
 const comment = ref("")
 const name = ref("")
 const commented = ref(false)
 let comments;
+
+const store = useAppStore()
 
 
 // function fillComment(){
@@ -58,7 +61,7 @@ function sendComment() {
             <div>
 <!--              <input type="text" v-model="comment">-->
               <v-text-field
-                v-model="name"
+                v-model="store.secret_name"
                 label="name"
                 variant="outlined"
                 class="my-custom-text-color"

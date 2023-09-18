@@ -24,6 +24,9 @@ export const useAppStore = defineStore('app', {
     },
     getSecretName(){
       return this.secret_name
+    },
+    isUsernameEmpty(){
+      return this.username === ""
     }
   },
   actions: {

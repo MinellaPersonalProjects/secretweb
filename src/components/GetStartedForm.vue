@@ -16,20 +16,22 @@ function makeSubmission(){
     <v-card-text>
       <v-form @submit.prevent="makeSubmission">
         <v-row>
-          <v-col cols="12" sm="4" md="4" lg="4" xl="4">
+          <v-col cols="12" sm="5" md="5" lg="5" xl="5">
             <v-text-field
               v-model="store.username"
               label="UserName"
+              variant="outlined"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="4" md="4" lg="4" xl="4">
+          <v-col cols="12" sm="5" md="5" lg="5" xl="5">
             <v-text-field
               v-model="store.animal"
               label="Favourite Animal"
+              variant="outlined"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="4" md="4" lg="4" xl="4">
-            <v-btn type="submit" block class="mt-2">Submit</v-btn>
+          <v-col cols="12" sm="2" md="2" lg="2" xl="2">
+            <v-btn type="submit" block class="mt-2" size="large" rounded="lg" variant="tonal" color="green">Submit</v-btn>
           </v-col>
         </v-row>
       </v-form>
