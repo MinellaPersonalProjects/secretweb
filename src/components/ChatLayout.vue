@@ -145,12 +145,6 @@ function sendComment() {
   margin-top: 10px;
 }
 
-.comment {
-  border: 1px solid chartreuse; /* Border properties (width, style, and color) */
-  padding: 10px;
-  margin: 10px;
-}
-
 .my-custom-text-color {
   color: chartreuse !important; /* Specify the desired text color here */
   margin-top: 10px;
