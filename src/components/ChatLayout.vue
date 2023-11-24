@@ -11,6 +11,7 @@ const comment = ref("")
 const name = ref("")
 const commented = ref(false)
 let comments;
+const app_key = process.env.PUSHER_NUMBER
 
 const store = useAppStore()
 
@@ -19,7 +20,7 @@ const store = useAppStore()
 //   printed.value = name.value + " commented : " + comment.value
 // }
 
-const pusher = new Pusher('9a3d43bc8c2567c1818f', {
+const pusher = new Pusher(`${app_key}`, {
   cluster: 'us2',
   encrypted: true
 });
@@ -51,7 +52,7 @@ function sendComment() {
   //   comment.value = ''
   //   console.log(response)
   // })
-
+  
   axios.post('https://secretweb-mrgb.onrender.com/comment', commenti).then(response => {
     store.clearName()
     comment.value = ''
