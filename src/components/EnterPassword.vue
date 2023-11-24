@@ -1,22 +1,30 @@
 <script setup>
-import {ref, watch} from "vue";
+import {ref} from "vue";
 import {useRouter} from "vue-router";
+import {useAppStore} from "@/store/app";
 
 const password = ref("")
 const mypass = 'NKEMISAWESOME'
 const route = useRouter()
-
-const incorrect = ref(false )
+const store = useAppStore()
+const incorrect = ref(false)
 
 function checkPassword () {
   if (password.value === mypass) {
     // Password is correct, navigate to another route
     route.push('/granted');
   } else {
-    // Password is incorrect, you can handle this case accordingly
-    // For example, display an error message
     console.log("Incorrect password");
+    store.addTry()
     incorrect.value = true
+
+    if (store.number_of_tries < 3){
+      password.value = ""
+      incorrect.value = false
+    } else {
+      route.push('/')
+      store.resetTries()
+    }
   }
 }
 </script>
@@ -28,6 +36,11 @@ function checkPassword () {
         <v-row justify="center">
           <v-col cols="auto">
             <h1 class="text_theme">Enter Password [<input type="password" v-model="password" size="12" @keyup.enter="checkPassword"/>]</h1>
+          </v-col>
+        </v-row>
+        <v-row justify="center">
+          <v-col cols="auto">
+            <h2 class="incorrect_theme" v-show="incorrect">Incorrect Password. {{store.number_of_tries}}/3 Tries .</h2>
           </v-col>
         </v-row>
       </v-col>
@@ -48,6 +61,15 @@ input[type="password"]:focus {
   font-style: normal;
   font-family: Courier New,serif, monospace;
   font-weight: 600;
+  font-size: medium;
+  line-height: 1.25;
+  color: chartreuse;
+}
+
+.incorrect_theme{
+  font-style: normal;
+  font-family: Courier New,serif, monospace;
+  font-weight: 400;
   font-size: medium;
   line-height: 1.25;
   color: chartreuse;
