@@ -5,6 +5,7 @@ import {ref} from "vue";
 import axios from "axios";
 import Pusher from "pusher-js";
 import {useAppStore} from "@/store/app";
+import CommentLayout from "./CommentLayout.vue";
 
 const comment = ref("")
 const name = ref("")
@@ -12,7 +13,6 @@ const commented = ref(false)
 let comments;
 
 const store = useAppStore()
-
 
 // function fillComment(){
 //   commented.value = true
@@ -30,24 +30,60 @@ channel.bind('new-comment', data => {
   console.log(data)
 });
 
+// dev test
+// axios.get('http://localhost:9000/comments').then(response => {
+//   comments = response.data.items ? response.data.items : []
+// })
+
 axios.get('https://secretweb-mrgb.onrender.com/comments').then(response => {
   comments = response.data.items ? response.data.items : []
 })
 
 function sendComment() {
   let commenti = {
-    name: name.value,
-    comm: comment.value
+    name: store.secret_name,
+    comment: comment.value
   }
 
+  // dev test
+  // axios.post('http://localhost:9000/comment', commenti).then(response => {
+  //   store.clearName()
+  //   comment.value = ''
+  //   console.log(response)
+  // })
+
   axios.post('https://secretweb-mrgb.onrender.com/comment', commenti).then(response => {
-    name.value = ''
+    store.clearName()
     comment.value = ''
     console.log(response)
   })
 
   commented.value = true
 }
+
+const animal_avatars = [
+        'fluent:animal-cat-16-regular',
+        'cil:animal',
+        'fluent:animal-dog-24-regular',
+        'healthicons:animal-cow-outline',
+        'healthicons:animal-tick-outline',
+        'fluent:animal-rabbit-16-regular',
+        'fluent:animal-turtle-20-regular',
+        'healthicons:animal-spider-outline',
+        'healthicons:animal-chicken-outline',
+        'emojione-v1:fish',
+        'emojione-v1:elephant',
+        'emojione-v1:ewe',
+        'emojione-v1:ant',
+        'emojione-v1:boar',
+        'emojione-v1:chipmunk'
+    ]
+
+function getRandomAnimal(){
+      const randomIndex = Math.floor(Math.random() * animal_avatars.length);
+      return animal_avatars[randomIndex];
+}
+
 
 </script>
 <!--TODO can also add fun 2d dance to the side -->
@@ -82,18 +118,23 @@ function sendComment() {
               @click="sendComment"
             >Submit</v-btn>
           </div>
-          <h2 class="note">Note : You can only initiate one comment and can reply to any comments</h2>
+          <!-- <h2 class="note">Note : You can leave a comment </h2> -->
           <div class="comment_section">
 <!--            <real-time-chat :commented="commented"/>-->
             <v-card
               v-show="commented"
               class="comment_text"
-              variant="tonal"
-              color="white"
-              height="400"
+              variant="outlined"
+              color="black"
+              height="500"
+              style="overflow-y: auto;" 
             >
-              <v-card-text>
-                {{comments}}
+              <v-card-text v-for="item in comments" :key="item">
+                  <comment-layout 
+                    :avatar="getRandomAnimal()"
+                    :name="item.name"
+                    :comment="item.comment"
+                  />
               </v-card-text>
             </v-card>
           </div>

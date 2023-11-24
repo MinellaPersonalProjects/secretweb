@@ -37,6 +37,9 @@ export const useAppStore = defineStore('app', {
     resetTries(){
       this.number_of_tries = 0
     },
+    clearName(){
+      this.secret_name = ""
+    },
     createSecretName(){
 
       // Split the username and favoriteAnimal into arrays of characters
